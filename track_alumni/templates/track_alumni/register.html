@@ -1,0 +1,245 @@
+{% extends 'track_alumni/basic.html' %}
+
+{% block page_details %}  Register Here  {% endblock %}
+{% block page_name %} Only Alumni can register {% endblock %}
+
+{% block js_head %}
+<script>
+    function CheckInput(e)
+    {
+        e.preventDefault();
+        var result = Check();
+        alert(result);
+        if(result){
+        e.currentTarget.submit();
+        }
+    }
+        function Check()
+        {
+            var phone = document.getElementById('phone').value;
+            var password = document.getElementById('password').value;
+            var cpassword = document.getElementById('cpassword').value;
+
+            var phonepattern = /^[6-9]{1}[0-9]{9}$/;
+            var passwordpattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+
+            if(document.getElementById('fname').value == '')
+            {
+               document.getElementById('fnameerror').innerHTML = 'This is a required field';
+               fname.focus();
+               return false;
+            }
+            else
+            {
+                document.getElementById('fnameerror').innerHTML = '';
+            }
+            if(document.getElementById('lname').value == '')
+            {
+               document.getElementById('lnameerror').innerHTML = 'This is a required field';
+               lname.focus();
+               return false;
+            }
+            else
+            {
+                document.getElementById('lnameerror').innerHTML = '';
+            }
+            if(document.getElementById('email').value == '')
+            {
+               document.getElementById('emailerror').innerHTML = 'This is a required field';
+               email.focus();
+               return false;
+            }
+            else
+            {
+                document.getElementById('emailerror').innerHTML = '';
+            }
+            if(document.getElementById('password').value == '')
+            {
+               document.getElementById('passworderror').innerHTML = 'This is a required field';
+               password.focus();
+               return false;
+            }
+            else
+            {
+                document.getElementById('passworderror').innerHTML = '';
+            }
+            if(document.getElementById('cpassword').value == '')
+            {
+               document.getElementById('cpassworderror').innerHTML = 'This is a required field';
+               cpassword.focus();
+               return false;
+            }
+            else
+            {
+                document.getElementById('cpassworderror').innerHTML = '';
+            }
+            if(document.getElementById('phone').value == '')
+            {
+               document.getElementById('phoneerror').innerHTML = 'This is a required field';
+               phone.focus();
+               return false;
+            }
+            else
+            {
+                document.getElementById('phoneerror').innerHTML = '';
+            }
+            if(document.getElementById('enrollno').value == '')
+            {
+               document.getElementById('enrollnoerror').innerHTML = 'This is a required field';
+               enrollno.focus();
+               return false;
+            }
+            else
+            {
+                document.getElementById('enrollnoerror').innerHTML = '';
+            }
+            if(document.getElementById('aadhar').value == '')
+            {
+               document.getElementById('aadharerror').innerHTML = 'This is a required field';
+               aadhar.focus();
+               return false;
+            }
+            else
+            {
+                document.getElementById('aadharerror').innerHTML = '';
+            }
+            if(!password.match(passwordpattern))
+            {
+                document.getElementById('passworderror').innerHTML = 'Please Enter a valid Password<br>Password should have atleast 8 characters, One Special,One Uppercse,One Lowercase,One Digit';
+                password.focus();
+                return false;
+            }
+            else
+            {
+                document.getElementById('passworderror').innerHTML = '';
+            }
+            if(password != cpassword)
+            {
+               document.getElementById('cpassworderror').innerHTML = 'Password and Confirm Password not match';
+               cpassword.focus();
+               return false;
+            }
+            else
+            {
+               document.getElementById('cpassworderror').innerHTML = '';
+            }
+            if(!phone.match(phonepattern))
+            {
+                document.getElementById('phoneerror').innerHTML = 'Please Enter a valid phone number';
+                phone.focus();
+                return false;
+            }
+            else
+            {
+                document.getElementById('phoneerror').innerHTML = '';
+            }
+        return true;
+        }
+
+</script>
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        {% if "info" in message.tags %}
+        <h4 class="alert alert-warning">{{ message }}</h4>
+        {% endif %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+
+<div class="container mb-3">
+    <h1 class="text-center text-dark my-3">Register Here</h1>
+    <form action="/register/" method="post" onsubmit="return CheckInput1(event)">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="fname">First Name<b class="text-danger">*</b></label>
+                        <input class="form-control" id="fname" name="fname" type="text">
+                        <small class="text-danger" id="fnameerror"></small>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="lname">Last Name<b class="text-danger">*</b></label>
+                        <input class="form-control" id="lname" name="lname" type="text">
+                        <small class="text-danger" id="lnameerror"></small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">EmailId<b class="text-danger">*</b></label>
+                    <input class="form-control" id="email" name="email" type="email">
+                    <small class="text-danger" id="emailerror"></small>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password<b class="text-danger">*</b></label>
+                    <input class="form-control" id="password" name="password" type="password">
+                    <small class="text-danger" id="passworderror"></small>
+                </div>
+                <div class="form-group">
+                    <label for="cpassword">Confirm Password<b class="text-danger">*</b></label>
+                    <input class="form-control" id="cpassword" name="cpassword" type="password">
+                    <small class="text-danger" id="cpassworderror"></small>
+                </div>
+                <!--
+                                <div class="form-group">
+                                  <label for="address1">Address</label>
+                                  <input type="text" name="address1" class="form-control" id="address1" placeholder="1234 Main St">
+                                </div>
+                                <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    <label for="city">City</label>
+                                    <input type="text" name="city" class="form-control" id="city">
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="state">State</label>
+                                    <input type="text" name="state" class="form-control" id="state">
+                                  </div>
+                                </div>
+                -->
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="phone">Phone<b class="text-danger">*</b></label>
+                        <input class="form-control" id="phone" name="phone" type="tel">
+                        <small class="text-danger" id="phoneerror"></small>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="enrollno">Enrollment No. of College<b class="text-danger">*</b></label>
+                        <input class="form-control" id="enrollno" min=5 name="enrollno" type="text">
+                        <small class="text-danger" id="enrollnoerror"></small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="aadhar">Aadhar No.<b class="text-danger">*</b> <small>(This is only for verification
+                        with your existing data)</small></label>
+                    <input class="form-control" id="aadhar" name="aadhar" type="text">
+                    <small class="text-danger" id="aadharerror"></small>
+                </div>
+
+                <!--
+                                <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    <label for="12marks">12<sup>th</sup> Marks</label>
+                                    <input type="text" name="12marks" class="form-control" id="12marks">
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="cgpa">CGPA at the end of degree</label>
+                                    <input type="text" name="cgpa" class="form-control" id="cgpa">
+                                  </div>
+                -->
+                <p><a href="#">By clicking submit, I agree to your terms</a></p>
+                <button class="btn btn-primary" type="submit" value="register">Submit</button>
+                <button name="reset" type="reset">Reset</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="col-md-2"></div>
+{% endblock %}
+

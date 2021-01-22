@@ -1,0 +1,38 @@
+{% extends 'track_alumni/basic.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8 mb-5 mb-lg-0">
+            <h2>All Requests</h2>
+            <div class="blog_left_sidebar">
+                {% for p in req %}
+                <article class="blog_item">
+                    <div class="blog_details">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <a class="d-inline-block" href="/groupview/{{ p.GroupId_id }}">
+                                    <h2 class="group-name text-dark">{{ p.GroupId.Group_Name }}</h2>
+                                </a>
+                                <ul class="blog-info-link">
+                                    <li><i class="fa fa-user"></i><a href="#"> Created by: {{ p.GroupId.Created_by.First_Name }} {{ p.GroupId.Created_by.Last_Name}} | Created Date: {{ p.GroupId.GroupCreateDateTime|date:'d M Y' }}</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-3 mt-2 ">
+                                <a href="{% url 'join_group' rid=p.RequestId %}" ><button type="submit" class="btn btn-success text-light my-2" style="width:100px;font-size:1.2em;">Join</button></a>
+                                <a href="{% url 'delete_request' rid=p.RequestId %}"><button type="submit" class="btn btn-danger text-light my-2" style="width:100px;font-size:1.2em;">Delete</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h2>All Notificaions</h2>
+    </div>
+</div>
+{% endblock %}

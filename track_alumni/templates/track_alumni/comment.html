@@ -1,0 +1,197 @@
+{% extends 'track_alumni/basic.html' %}
+{% load static %}
+{% block css %}
+<!--<link rel="stylesheet" href="{% static "track_alumni/css/style1.css" %}">-->
+<!--    Medium Style Editor-->
+    <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+<style>
+.medium-editor-textarea{
+    min-height: 100px;
+}
+.area{
+   min-height: 150px;
+   min-width: 600px;
+}
+</style>
+{% endblock %}
+{% block body %}
+
+<div class="container my-2">
+    {% if post %}
+    <div class="container">
+        <!-- Post Starts -->
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <h1 class="text-center text-dark">{{ post.HeadingText }}</h1>
+                <article class="blog_item">
+                    <div class="blog_post border">
+                        <div class="blog-img">
+                            <img alt="" src="/media/{{ post.Thumbnail }}">
+                        </div>
+                        <div class="blog_details">
+                            <h4> {{ post.HeadingText }}</h4>
+                        </div>
+                        <div class="blog_info">
+                            <ul class="blog_meta list" >
+                                <li>
+                                    <a href="#"><i class="fa fa-user-o"></i> Posted by: {{ post.Created_by.First_Name }} {{ post.Created_by.Last_Name }}</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-calendar-o"></i> Posted date: {{ post.PostCreateDateTime|date:'d M Y P' }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            <div class="col-lg-2"></div>
+            <!--
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <h1 class="text-center">{{ post.HeadingText }}</h1>
+                <article class="blog_item">
+                    <div class="blog_item_img">
+                        <img class="card-img rounded-0" src="/media/{{post.Thumbnail}}" alt="">
+                        <a href="#" class="blog_item_date">
+                            <h3>15</h3>
+                            <p>Jan</p>
+                        </a>
+                    </div>
+                    <div class="blog_details">
+                        <a class="d-inline-block" href="single-blog.html">
+                            <h2>{{ post.HeadingText }}</h2>
+                        </a>
+                        <ul class="blog-info-link">
+                            <li><a href="#"><i class="fa fa-user"></i>Created by: {{ post.Created_by.First_Name }} {{post.Created_by.Last_Name }}</a></li>
+                            <li><a href="#"><i class="fa fa-date"></i> Created Date: {{ post.PostCreateDateTime|date:'d M Y P' }}</a></li>
+                            <li><a href="/comment/{{i.PostId}}"><i class="fa fa-comments"></i> Comments {{ post.comments.count }}</a></li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+            -->
+        <!-- Post Ends -->
+        <!-- Comment Section Starts -->
+<!--            <div class="col-md-2"></div>-->
+<!--            <div class="col-md-8">-->
+<!--        <h2 class="text-center">Comments({{ post.comments.count }})</h2>-->
+<!--        <div class="comments-area">-->
+<!--            {% for comment in post.comments.all %}-->
+<!--            <div class="comment-list">-->
+<!--                <div class="single-comment justify-content-between d-flex">-->
+<!--                    <div class="user justify-content-between d-flex">-->
+<!--                        <div class="thumb">-->
+<!--                            <img src="{% static 'track_alumni/banner1.jpg' %}" alt="">-->
+<!--                        </div>-->
+<!--                        <div class="desc" style="margin-top: -10px;">-->
+<!--                            <p class="comment">{{ comment.Comment|safe }} </p>-->
+<!--                           <div class="d-flex justify-content-between">-->
+<!--                               <div class="d-flex align-items-center">-->
+<!--                                  <h5>-->
+<!--                                      <a href="#"><i class="fa fa-user"></i> {{comment.Created_by.First_Name}} {{comment.Created_by.Last_Name}}</a>-->
+<!--                                  </h5>-->
+<!--                                  <p class="date">{{comment.DateTime}}</p>-->
+<!--                               </div>-->
+<!--                               <div class="btn-reply" >-->
+<!--                                   <a href="#"  class="btn-reply text-uppercase " data-toggle="collapse" data-target="#replyarea{{comment.CommentId}}">reply</a>-->
+<!--                               </div>-->
+<!--                           </div>-->
+<!--                            <div class="collapse" id="replyarea{{comment.CommentId}}">-->
+<!--                               <form class="form" action="#" method="POST">-->
+<!--                                   {% csrf_token %}-->
+<!--                                    <div class="form-group">-->
+<!--                                       <textarea class="editable medium-editor-textarea form-control area" name="comment{{comment.CommentId}}" id="comment{{comment.CommentId}}" placeholder="Add Your Comment Here"></textarea>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group" >-->
+<!--                                       <button class="btn btn-success" type="submit" value="reply" >Reply</button>-->
+<!--                                    </div>-->
+<!--                               </form>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            {% empty %}-->
+<!--            <h3 class="text-center">No Comments</h3>-->
+<!--            {% endfor %}-->
+<!--        </div>-->
+<!--        </div>-->
+
+
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div class="comments-area">
+                    <h2 class="text-dark text-center" style="font-family:'sans-serif'">
+                    {% if post.comments.count > 1 and post.comments.count < 10 %} 0{{ post.comments.count }} Comments
+                    {% elif post.comments.count == 0 or post.comments.count == 1 %} {{ post.comments.count }} Comment
+                    {% else %}{{ post.comments.count }} Comments
+                    {% endif %}
+                    </h2>
+                    <hr/>
+                    {% for comment in post.comments.all %}
+                    <div class="comment-list">
+                        <div class="single-comment justify-content-between d-flex">
+                            <div class="user justify-content-between d-flex">
+                                <div class="thumb">
+                                    <img alt="" src="{% static 'blog/assets/images/blog-details/c1.jpg' %}">
+                                </div>
+                                <div class="desc">
+                                    <h5><a href="#">{{ comment.Created_by.First_Name }} {{ comment.Created_by.Last_Name }}</a></h5>
+                                    <p class="date">{{ comment.DateTime|date:'d M Y P' }}</p>
+                                    <p class="comment">{{ comment.Comment|safe }}</p>
+                                </div>
+                            </div>
+                            <div class="reply-btn">
+                                <a class="btn-reply text-uppercase" data-toggle="collapse" data-target="#replyarea{{comment.CommentId}}" href="">reply</a>
+                            </div>
+                        </div>
+                        <div class="collapse" id="replyarea{{comment.CommentId}}">
+                            <form action="" class="form" method="POST">
+                            {% csrf_token %}
+                                <textarea class="form-control editable medium-editor-textarea postcontent" data-placeholder="type new comment" name="comment"></textarea><br/>
+                                <button class="template-btn">Reply</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- Comment Section Ends  -->
+        <!-- Add Comment Starts-->
+        <div class="col-md-1"></div>
+        <div class="col-md-12">
+            <h3>Add new comment</h3><br>
+            <form action="{% url 'add_comment' id=post.PostId %}" class="form" method="POST">
+                {% csrf_token %}
+                <textarea class="form-control editable medium-editor-textarea postcontent" data-placeholder="type new comment" name="comment" id="comment"></textarea><br/>
+                <button type="submit" class="template-btn">Post Comment</button>
+            </form>
+        </div>
+<!--        <div class="container">-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-2"></div>-->
+<!--                <div class="col-md-8">-->
+<!--                    <form class="form" action="{% url 'add_comment' id=post.PostId %}" method="POST">-->
+<!--                        {% csrf_token %}-->
+<!--                        <div class="form-group">-->
+<!--                            <label class="text-dark" for="comment">Add Comment</label>-->
+<!--                            <textarea class="editable medium-editor-textarea form-control" name="comment" id="comment" placeholder="Add Your Comment Here"></textarea>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <button class="btn btn-success" type="submit" value="addcomment">Add Comment</button>-->
+<!--                        </div>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+        <!-- Add Comment Ends-->
+    {% endif %}
+    </div>
+</div>
+<script>
+        var editor = new MediumEditor('.editable');
+</script>
+{% endblock %}

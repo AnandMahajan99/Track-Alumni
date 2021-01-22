@@ -1,0 +1,29 @@
+{% extends 'track_alumni/basic.html' %}
+{% load static %}
+
+{% block css %}
+<style>
+.body-head{
+    padding:1.5rem 1rem;
+    margin-bottom:2rem;
+    background-color:#e9ecef;
+    border-radius:.3rem
+}
+</style>
+{% endblock %}
+
+{% block body %}
+
+<div class="body-head">
+    <div class="container">
+        <h2>AboutUs</h2>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js%}
+<script>
+    document.getElementById('about').innerHTML = '<a class="nav-link nav-hover active" id="about" href="/">About</a>';
+</script>
+{% endblock %}

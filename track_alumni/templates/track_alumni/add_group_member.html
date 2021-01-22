@@ -1,0 +1,57 @@
+{% extends 'track_alumni/basic.html' %}
+{% load static %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center">{{ group.Group_Name }}</h1>
+    <h2>Add Group Member</h2>
+    <div class="row">
+            <div class="col-lg-8 mb-5 mb-lg-0">
+                  <div class="blog_left_sidebar">
+                      {% for i in alumni %}
+
+                      <article class="blog_item">
+
+                        <div class="blog_details">
+                            <div class="row">
+                                <div class="col-md-2">
+                                <img src="{% static 'track_alumni/images/userlogo.svg' %}" class="" style="margin-top:-10px" height="100px" width="100px">
+                                    </div>
+                                <div class="col-md-6">
+                            <a class="d-inline-block mx-4" href="#">
+                                <h4 class="group-name">{{ i.First_Name }} {{ i.Last_Name }}</h4>
+                            </a>
+                            <ul class="blog-info-link">
+                              <li  style="margin-left:10px;"><i class="fa fa-date"></i><a href="#"> {{ i.EmailId }} </a></li>
+                            </ul>
+                                    </div>
+                                <div class="col-md-4">{{ i.Enrollment_no }}{{ group.GroupId }}
+                                    <a href="{% url 'send_request' gid=group.GroupId id=i.Enrollment_no_id %}"><button class="button text-white">Send Request</button></a>
+                                </div>
+                            </div>
+                        </div>
+
+                      </article>
+                      {% endfor %}
+                  </div>
+              </div>
+        <div class="col-md-4">
+            <div class="blog_right_sidebar">
+                  <aside class="single_sidebar_widget search_widget">
+                      <form action="#">
+                          <div class="form-group">
+                              <div class="input-group mb-3">
+                                  <input type="text" class="form-control" placeholder="Search Keyword">
+                                  <div class="input-group-append">
+                                      <button class="btn" type="button"><i class="ti-search"></i></button>
+                                  </div>
+                              </div>
+                          </div>
+                          <button class="button rounded-0 primary-bg text-white w-100" type="submit">Search</button>
+                      </form>
+                  </aside>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

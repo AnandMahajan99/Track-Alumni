@@ -1,0 +1,65 @@
+{% extends 'track_alumni/basic.html' %}
+{% load static %}
+
+{% block body %}
+<h2 class="text-center text-dark my-2">All Posts</h2>
+
+<div class="container my-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+            {% for item in group %}
+            {% for i in item %}
+            {% for j in i%}
+ <!--     <article class="blog_item">
+                        <div class="blog_item_img">
+                          <img class="card-img rounded-0" height="350px" src="/media/{{j.Thumbnail}}" alt="">
+                          <a href="#" class="blog_item_date">
+                            <h3>{{ j.PostCreateDateTime|date:'d'}}</h3>
+                            <p>{{ j.PostCreateDateTime|date:'M'}}</p>
+                          </a>
+                        </div>
+
+                        <div class="blog_details">
+                            <a class="d-inline-block" href="single-blog.html">
+                                <h2>{{ j.HeadingText }}</h2>
+                            </a>
+                            <p>That dominion stars lights dominion divide years for fourth have don't stars is that he earth it first without heaven in place seed it second morning saying.</p>
+                            <ul class="blog-info-link">
+                              <li><a href="#"><i class="fa fa-user"></i>Created by: {{ j.Created_by.First_Name }} {{ j.Created_by.Last_Name }}</a></li>
+                              <li><a href="#"><i class="fa fa-date"></i> Created Date: {{ j.PostCreateDateTime|date:'d-M-Y P'}}</a></li>
+                              <li><a href="/comment/{{i.PostId}}"><i class="fa fa-comments"></i> Comments {{ j.comments.count }}</a></li>
+                            </ul>
+                        </div>
+                      </article>  -->
+                <hr>
+                <article class="row blog_item">
+                    <div class="col-md-2">
+                        <div class="blog_info text-right">
+                            <ul class="blog_meta list">
+                                <li><a href="#">{{ j.Created_by.First_Name }} {{ j.Created_by.Last_Name }}<i class="fa fa-user-o"></i></a></li>
+                                <li><a href="#">{{ j.PostCreateDateTime|date:'d M Y' }}<i class="fa fa-calendar-o"></i></a></li>
+                                <li><a href="#">1.2M Views<i class="fa fa-eye"></i></a></li>
+                                <li><a href="{% url 'comments' id=j.PostId %}">{{ j.comments.count }} Comment<i class="fa fa-comment-o"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="blog_post">
+                            <div class="blog-img">
+                                <img alt="" src="/media/{{ j.Thumbnail }}">
+                            </div>
+                            <div class="blog_details">
+                                <a href="#"><h4>{{ j.HeadingText }}</h4></a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+            {% endfor %}
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

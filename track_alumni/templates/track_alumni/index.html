@@ -1,0 +1,42 @@
+{% extends 'track_alumni/basic.html'%}
+
+{% block page_details %}  Welcome {{ request.session.username }}  {% endblock %}
+{% block page_name %} Home  {% endblock %}
+
+{% block body %}
+<div class="container my-2">
+    <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+              <h1 class="service-title pad-bt15 text-dark">UpComing Events</h1>
+              <hr class="bottom-line">
+          </div>
+            <div class="col-lg-12">
+              {% for i in post %}
+                <article class="row blog_item">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="blog_post" style="border:1px solid black;">
+                            <div class="blog-img">
+                                <img alt="" src="/media/{{i.Thumbnail}}">
+                            </div>
+                            <div class="blog_details">
+                                <a href="#"><h4>{{ i.Heading }}</h4></a>
+                                <p>{{ i.Text }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js%}
+<script>
+
+</script>
+{% endblock %}

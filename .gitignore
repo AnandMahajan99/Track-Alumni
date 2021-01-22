@@ -1,0 +1,6 @@
+.idea
+*__init__.py
+*__pycache__
+*migrations
+db.sqlite3
+media

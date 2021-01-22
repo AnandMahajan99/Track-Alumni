@@ -1,0 +1,112 @@
+{% extends 'track_alumni/basic.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static '/style.css' %}">
+{% endblock %}
+
+{% block page_details %}  Your groups list  {% endblock %}
+{% block page_name %} {% endblock %}
+
+{% block body %}
+<div class="container">
+    {% if messages %}
+       <ul class="messages">
+         {% for message in messages %}
+           {% if "warn" in message.tags %}
+              <h2 class="alert alert-warning">{{ message }}</h2>
+           {% elif "delete" in message.tags %}
+              <h2 class="alert alert-primary">{{ message }}</h2>
+           {% elif "create_group_success" in message.tags %}
+              <h2 class="alert alert-primary">{{ message }}</h2>
+           {% endif %}
+         {% endfor %}
+       </ul>
+    {% endif %}
+</div>
+
+  <!--================Blog Area =================-->
+  <section class="blog_area">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-12 text-center">
+                  <h1 class="service-title pad-bt15">Groups</h1>
+                  <hr class="bottom-line">
+              </div>
+              <div class="col-lg-8">
+                  <div class="blog_left_sidebar">
+                      {% for p in group %}
+                      <article class="row blog_item">
+                          <div class="col-md-3">
+                              <div class="blog_info text-right">
+                                  <ul class="blog_meta list">
+                                      <li><a href="#">{{ p.GroupId.Created_by.First_Name }} {{ p.GroupId.Created_by.Last_Name }}<i
+                                              class="fa fa-user-o"></i></a></li>
+                                      <li><a href="#">{{ p.GroupId.GroupCreateDateTime|date:'d M Y' }}<i
+                                              class="fa fa-calendar-o"></i></a></li>
+                                  </ul>
+                              </div>
+                          </div>
+                          <div class="col-md-9">
+                              <div class="blog_post">
+                                  <div class="blog_details">
+                                      <a href="{% url 'groupview' id=p.GroupId_id %}"><h4>{{ p.GroupId.Group_Name }}</h4>
+                                      </a>
+                                  </div>
+                              </div>
+                          </div>
+                      </article>
+                      {% endfor %}
+                  </div>
+              </div>
+              <div class="col-lg-4">
+                  <div class="blog_right_sidebar">
+                      <aside class="single_sidebar_widget search_widget">
+                          <div class="input-group">
+                              <input class="form-control" type="text">
+                              <span class="input-group-btn">
+                                      <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+                                  </span>
+                          </div><!-- /input-group -->
+                          <div class="br"></div>
+                      </aside>
+                      <aside class="single_sidebar_widget post_category_widget">
+                        <button type="submit" class="genric-btn success w-100" data-toggle="collapse" data-target="#CreateNew" style="font-size:18px;">Create New Group</button>
+                      </aside>
+                      <div class="collapse"  id="CreateNew">
+                          <form class="form" action="{% url 'create_new_group' %}" method="POST">
+                              {% csrf_token %}
+                              <div class="form-group">
+                                  <label for="groupname">Group Name</label>
+                                  <input type="text" name="groupname" placeholder="Enter Group Name" class="form-control" id="groupname">
+                              </div>
+                              <button type="submit" class="genric-btn success" value="create">Create</button>
+                          </form>
+                      </div>
+                      <aside class="single_sidebar_widget post_category_widget">
+                        <button type="submit" class="genric-btn danger w-100" data-toggle="collapse" data-target="#DeleteGroup" style="font-size:18px;">Delete Group</button>
+                      </aside>
+                      <div class="collapse"  id="DeleteGroup">
+                          <aside class="single_sidebar_widget post_category_widget">
+                             <h4 class="widget_title">Select a group to delete<br><small>You can only delete groups created by you</small></h4>
+                             <ul class="list cat-list">
+                                <li>
+                                    {% for p in group %}
+                                    <div class="d-flex my-2">
+                                       {% ifequal id p.GroupId.Created_by_id %}
+                                          <h5 class="my-1">{{ p.GroupId.Group_Name }}</h5>
+                                        <a href="{% url 'delete_group' gid=p.GroupId_id %}" class="ml-auto"><button class="genric-btn danger">Delete</button><br></a>
+                                       {% endifequal %}
+                                    </div>
+                                    {% endfor %}
+                                </li>
+                             </ul>
+                          </aside>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!--================Blog Area =================-->
+
+{% endblock %}

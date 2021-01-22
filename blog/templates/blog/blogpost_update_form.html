@@ -1,0 +1,35 @@
+{% extends 'blog/basic.html' %}
+{% load crispy_forms_tags %}
+{% block css %}
+<style>
+.form{
+    font-family: 'sans-serif';
+}
+.medium-editor-textarea{
+    min-height: 150px;
+    min-width: 600px;
+    height: auto;
+}
+.area{
+   min-height: 150px;
+   min-width: 600px;
+}
+
+</style>
+{% endblock %}
+{% block body %}
+
+    <h1 class="text-center">New Post</h1>
+<div class="container my-3">
+    <form class="form post-form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form|crispy }}
+        <button type="submit" name="choice" id="draft" value="save_to_draft" class="template-btn">Save to Draft</button>
+        <button type="submit" name="choice" id="post" value="post_publish" class="template-btn">Publish Post</button>
+    </form>
+</div>
+    <script>
+        var editor = new MediumEditor('.editable');
+    </script>
+{% endblock %}

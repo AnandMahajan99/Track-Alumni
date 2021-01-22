@@ -1,0 +1,36 @@
+{% extends 'track_alumni/basic.html' %}
+{% load static %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-3 ml-auto">
+            <img class="" src="{% static 'track_alumni/assets/images/profile.jpg' %}" style="width:100px;height:100px;border-radius:60px;">
+            <h4 class="text-dark">{{ request.session.user }}</h4>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="row">
+                <div class="col-1 col-md-1"></div>
+                <div class="col-3 col-md-3">
+                    <h3 class="mx-3"><b>{{ post }}</b></h3>
+                    <h5>Posts</h5>
+                </div>
+                <div class="col-3 col-md-3">
+                    <h3 class="mx-3"><b>{{ groups_created }}</b></h3>
+                    <h5>Groups Created</h5>
+                </div>
+                <div class="col-3 col-md-3">
+                    <h3 class="mx-3"><b>{{ groups_joined }}</b></h3>
+                    <h5>Joined Groups</h5>
+                </div>
+            </div>
+            <div class="">
+                <button class="btn w-100 border">Edit Profiles</button>
+            </div>
+        </div>
+        <div class=""></div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'track_alumni/basic.html' %}
+{% load static %}
+
+{% block page_details %}  Login  {% endblock %}
+{% block page_name %}  {% endblock %}
+
+
+{% block js_head %}
+<script>
+
+    function check(e)
+    {
+        e.preventDefault();
+        var phone = '9229241834';
+        var pattern = '/^[6-9]{1}[0-9]{9}$/';
+        try{
+            if(phone.match(pattern)){
+                alert('matchphone');
+            }
+        }
+        catch(e){
+            throw new Error(e.message);
+        }
+        e.currentTarget.submit();
+
+    }
+</script>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    {% if "Login Successfull" in msg %}
+    <h4 class="alert alert-success text-center">{{ msg }}</h4>
+    {% endif %}
+    {% if "Login Unsuccessfull" in msg %}
+    <h4 class="alert alert-danger text-center">{{ msg }} , Username or Password is wrong , try again</h4>
+    {% endif %}
+    <div class="row my-4">
+        <div class="col-md-4 col-sm-2 col-2"></div>
+        <div class="col-md-4 col-sm-8 col-8 border">
+            <h2 class="text-center text-dark">Login Now</h2>
+            <img src="{% static 'track_alumni/images/userlogo.svg' %}" class="mx-auto d-block" height="150px" width="150px">
+            <form action="/login/" method="post" name="login">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="userid">UserId</label>
+                    <input type="email" name="userid" class="form-control" id="userid">
+                </div>
+                <div class="form-group">
+                    <label for="pass">Password</label>
+                    <input type="password" name="pass" class="form-control" id="pass">
+                </div>
+                <p class="text-right"><a href="#" style="color:#ffb606;">Forget Password</a></p>
+                <button type="submit" value="login" class="template-btn w-100">Login</button>
+            </form>
+            <p><a href="/register/" style="color:#ffb606;"> Don't have an account?</a></p>
+        </div>
+        <div class="col-md-4 col-sm-2 col-2"></div>
+    </div>
+</div>
+{% endblock %}

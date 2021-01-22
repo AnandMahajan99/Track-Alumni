@@ -1,0 +1,201 @@
+{% extends 'track_alumni/basic.html' %}
+{% load static %}
+{% block css %}
+<style>
+.blog_meta li{
+    display: inline;
+}
+.button{
+    margin-bottom: 20px;
+}
+</style>
+{% endblock %}
+
+{% block page_details %} All post related to {{ name }} display here  {% endblock %}
+{% block page_name %}  {% endblock %}
+
+{% block body %}
+<div>
+    {% for message in messages %}
+    <h2 class="alert alert-success text-center">{{ message }}</h2>
+    {% endfor %}
+</div>
+<!--{% for i in comment %}-->
+<!--{% for p in i %}-->
+<!--{{p.comment}}-->
+<!--{% endfor %}-->
+<!--{% endfor %}-->
+<h1 class="text-center my-3"></h1>
+
+
+<!--================Blog Area =================-->
+<section class="blog_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2 class="service-title pad-bt15 text-dark">{{ name }}</h2>
+                <hr class="bottom-line">
+            </div>
+            <div class="col-lg-8">
+                <div class="blog_left_sidebar">
+                    {% for p in posts %}
+                    <article class="row blog_item">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="blog_post border">
+                                <div class="blog-img">
+                                    <img alt="" src="/media/{{ p.Thumbnail }}">
+                                </div>
+                                <div class="blog_details">
+                                    <h4>{{ p.HeadingText }}</h4>
+                                </div>
+                                <div class="blog_info">
+                                    <ul class="blog_meta list" >
+                                        <li>
+                                            <a href="#"><i class="fa fa-user-o"></i> Posted by: {{ p.Created_by.First_Name }} {{ p.Created_by.Last_Name }}</a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="fa fa-calendar-o"></i> Posted date: {{ p.PostCreateDateTime|date:'d M Y' }}</a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'comments' id=p.PostId %}"><i class="fa fa-comment-o"></i> {{ p.comments.count }} comments</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="blog_right_sidebar">
+                      <aside class="single_sidebar_widget search_widget">
+                          <div class="input-group">
+                              <input class="form-control" type="text">
+                              <span class="input-group-btn">
+                                      <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+                                  </span>
+                          </div><!-- /input-group -->
+                          <div class="br"></div>
+                      </aside>
+                      <aside class="single_sidebar_widget post_category_widget">
+                          <a href="{% url 'create_new_post' gid=id %}" ><button type="submit" class="genric-btn success w-100 button" style="font-size:18px;">Create New Post</button></a>
+                      </aside>
+                      {% for i in members|slice:'0:1' %}
+                      {% ifequal request.session.user i.GroupId.Created_by_id %}
+                      <aside class="single_sidebar_widget post_category_widget">
+                          <a href="{% url 'add_member' gid=i.GroupId_id %}" ><button type="submit" class="genric-btn success w-100 button" style="font-size:18px;">Add Group Member</button></a>
+                      </aside>
+                      <aside class="single_sidebar_widget post_category_widget">
+                          <a href="#" ><button type="submit" class="genric-btn danger w-100 button" style="font-size:18px;">Delete Group Member</button></a>
+                      </aside>
+                      <aside class="single_sidebar_widget post_category_widget">
+                          <a href="{% url 'delete_group' gid=i.GroupId_id %}" ><button type="submit" class="genric-btn danger w-100 button" style="font-size:18px;">Delete Group</button></a>
+                      </aside>
+                      {% else %}
+                      <aside class="single_sidebar_widget post_category_widget">
+                          <a href="{% url 'exit_group' gid=i.GroupId_id %}" ><button type="submit" class="genric-btn danger w-100 button" style="font-size:18px;">Exit Group</button></a>
+                      </aside>
+                      {% endifequal %}
+                      {% endfor %}
+                      <aside class="single_sidebar_widget post_category_widget">
+                        <h4 class="widget_title">Group Members</h4>
+                          <ul class="list cat-list">
+                              {% for i in members %}
+                            <li>
+                                <a href="#" class="d-flex">
+                                    <p>{{i.MemberId.First_Name}} {{i.MemberId.Last_Name}}</p>
+                                        {% ifequal i.MemberId i.GroupId.Created_by %}
+                                            <p class="ml-auto">Admin</p>
+                                        {% endifequal %}
+                                </a>
+                            </li>
+                              {% endfor %}
+                          </ul>
+                      </aside>
+                  </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================Blog Area =================-->
+
+  <!--================Blog Area =================-->
+<!--  <section class="blog_area section-margin&#45;&#45;large">-->
+<!--      <div class="container">-->
+<!--          <div class="row">-->
+<!--              <div class="col-lg-8 mb-5 mb-lg-0">-->
+<!--                  <div class="blog_left_sidebar">-->
+<!--                      {% for i in posts %}-->
+<!--                     <article class="blog_item border rounded">-->
+<!--                          <div class="blog_item_img" style="text-align:center !important;">-->
+<!--                          <img class="img img-responsive" style="margin:0 auto !important;max-width:100%;height:auto;" src="/media/{{i.Thumbnail}}" alt="">-->
+<!--                          <a href="#" class="blog_item_date">-->
+<!--                            <h3>{{ i.PostCreateDateTime|date:'d' }}</h3>-->
+<!--                            <p>{{ i.PostCreateDateTime|date:'M' }}</p>-->
+<!--                          </a>-->
+<!--                        </div>-->
+
+<!--                        <div class="blog_details">-->
+<!--                            <a class="d-inline-block" href="single-blog.html">-->
+<!--                                <h2>{{i.HeadingText}}</h2>-->
+<!--                            </a>-->
+<!--                            <p></p>-->
+<!--                            <ul class="blog-info-link">-->
+<!--                              <li><a href="#"><i class="fa fa-user"></i>Posted by: {{ i.Created_by.First_Name }} {{ i.Created_by.Last_Name }}</a></li>-->
+<!--                              <li><a href="#"><i class="fa fa-date"></i> Posted Date: {{ i.PostCreateDateTime|date:'d M Y P' }}</a></li>-->
+<!--                              <li><a href="{% url 'comments' id=i.PostId %}"><i class="fa fa-comments"></i> Comments {{ i.comments.count }}</a></li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                      </article>-->
+<!--                      {% empty %}-->
+<!--                       <h1 class="text-center" style="margin-top:50px;">No Post Yet.</h1>-->
+<!--                      {% endfor %}-->
+<!--                  </div>-->
+<!--              </div>-->
+<!--              <div class="col-lg-4">-->
+<!--                  <div class="blog_right_sidebar">-->
+<!--                      <aside class="single_sidebar_widget search_widget">-->
+<!--                          <a href="{% url 'create_new_post' gid=id %}" ><button type="submit" class="button rounded-0 bg-success text-white w-100">Create New Post</button></a>-->
+<!--                      </aside>-->
+<!--                      {% for i in members|slice:'0:1' %}-->
+<!--                      {% ifequal request.session.user i.GroupId.Created_by_id %}-->
+<!--                      <aside class="single_sidebar_widget search_widget">-->
+<!--                          <a href="{% url 'add_member' gid=i.GroupId_id %}" ><button type="submit" class="button rounded-0 primary-bg text-white w-100">Add Group Member</button></a>-->
+<!--                      </aside>-->
+<!--                      <aside class="single_sidebar_widget search_widget">-->
+<!--                          <a href="#" ><button type="submit" class="button rounded-0 bg-danger text-white w-100">Delete Group Members</button></a>-->
+<!--                      </aside>-->
+<!--                      <aside class="single_sidebar_widget search_widget">-->
+<!--                          <a href="{% url 'delete_group' gid=i.GroupId_id %}" ><button type="submit" class="button rounded-0 bg-danger text-white w-100">Delete Group</button></a>-->
+<!--                      </aside>-->
+<!--                      {% else %}-->
+<!--                      <aside class="single_sidebar_widget search_widget">-->
+<!--                          <a href="{% url 'exit_group' gid=i.GroupId_id %}" ><button type="submit" class="button rounded-0 bg-danger text-white w-100">Exit Group</button></a>-->
+<!--                      </aside>-->
+<!--                      {% endifequal %}-->
+<!--                      {% endfor %}-->
+<!--                      <aside class="single_sidebar_widget post_category_widget">-->
+<!--                        <h4 class="widget_title">Group Members</h4>-->
+<!--                          <ul class="list cat-list">-->
+<!--                              {% for i in members %}-->
+<!--                            <li>-->
+<!--                                <a href="#" class="d-flex">-->
+<!--                                    <p>{{i.MemberId.First_Name}} {{i.MemberId.Last_Name}}</p>-->
+<!--                                        {% ifequal i.MemberId i.GroupId.Created_by %}-->
+<!--                                            <p class="ml-auto">Admin</p>-->
+<!--                                        {% endifequal %}-->
+<!--                                </a>-->
+<!--                            </li>-->
+<!--                              {% endfor %}-->
+<!--                          </ul>-->
+<!--                      </aside>-->
+<!--                  </div>-->
+<!--              </div>-->
+<!--          </div>-->
+<!--      </div>-->
+<!--  </section>-->
+  <!--================Blog Area =================-->
+{% endblock %}
